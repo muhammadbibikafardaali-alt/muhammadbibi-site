@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DDoS mitigation and log management on AWS · Muhammad Bibi</title>
+  <meta name="description" content="Case study: keeping a webshop available under DDoS attack with AWS Shield, AWS WAF, CloudWatch and Lambda, compared with Cloudflare. Fontys graduation project, assessed Outstanding.">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:wght@500&display=swap">
+  <link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="/">Muhammad Bibi</a>
+    <nav class="nav" aria-label="Main">
+      <a href="/">Home</a>
+      <a href="/experience/">Experience</a>
+      <a href="/projects/" aria-current="page">Projects</a>
+      <a href="/contact/">Contact</a>
+      <a class="push" href="/cv/">CV</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="wrap">
+
+  <section>
+    <p class="crumbs meta"><a href="/projects/">Projects</a> / P-001</p>
+    <div class="case-top">
+      <span class="status filled delivered">Delivered</span>
+      <span class="meta">2023-09 → 2024-02</span>
+      <span class="meta">Graduation project · Fontys</span>
+    </div>
+    <h1 class="page-title">DDoS mitigation and log management on AWS</h1>
+    <p class="lead muted" style="margin-top:16px">Keeping a webshop available while it is under attack, and making sure the logs can explain afterwards what happened.</p>
+    <p class="toc"><a href="#problem">01 Problem</a> → <a href="#approach">02 Approach</a> → <a href="#result">03 Result</a> → <a href="#lessons">04 Lessons</a> → <a href="#tools">05 Tools</a></p>
+  </section>
+
+  <div class="case">
+    <aside class="case-aside">
+      <div><span class="label">Context</span>Associate Degree ICT, Fontys. Graduation internship as CloudSecOps intern at iO.</div>
+      <div><span class="label">Assessment</span>Outstanding · 2024-02-08</div>
+      <div><span class="label">Standards considered</span>ISO 27001 · NEN 7510 · PCI DSS</div>
+      <div><span class="label">Compared</span>AWS Shield + WAF vs Cloudflare</div>
+      <figure style="margin-top:8px">
+        <img src="/assets/graduation.webp" width="440" height="550" loading="lazy" alt="Muhammad in a graduation gown and cap, seen from behind" style="aspect-ratio:4/5; object-fit:cover; border-radius:2px">
+        <figcaption class="meta">Graduation, February 2024.</figcaption>
+      </figure>
+    </aside>
+
+    <div class="case-main">
+
+      <section class="case-block block" id="problem">
+        <p class="label">01 · Problem</p>
+        <h2 class="section-title">A webshop that goes down under attack loses orders, and nobody can say why.</h2>
+        <p class="body">A webshop on AWS needed protection against distributed denial-of-service (DDoS) attacks. Two kinds of attack matter: network floods (layer 3 and 4, such as SYN or UDP floods) that try to saturate the connection, and application floods (layer 7) that send large numbers of valid-looking HTTP requests to expensive pages like search or checkout.</p>
+        <p class="body">Its logs were spread over several services, so after an incident there was no single place to see who sent what, what was blocked, and what reached the servers.</p>
+      </section>
+
+      <section class="case-block block" id="approach">
+        <p class="label">02 · Approach</p>
+        <h2 class="section-title">Filter at the edge, collect every log in one place, automate the response.</h2>
+
+        <h3>Choosing the protection layer</h3>
+        <p class="body">Before building, I compared AWS-native protection with Cloudflare, on what each stops, where it sits, what it logs and what it costs.</p>
+        <div class="table-scroll">
+          <table>
+            <thead><tr><th scope="col"></th><th scope="col">AWS Shield + WAF</th><th scope="col">Cloudflare</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Network floods (L3/L4)</th><td>Shield Standard: automatic, free for every AWS account.</td><td>Unmetered DDoS mitigation on every plan, including free.</td></tr>
+              <tr><th scope="row">HTTP floods (L7)</th><td>AWS WAF managed rule groups and rate-based rules.</td><td>WAF and rate limiting; more managed rules on paid plans.</td></tr>
+              <tr><th scope="row">Where it sits</th><td>Inside AWS, on the load balancer or CloudFront.</td><td>In front of the origin through its DNS proxy; the origin IP must stay hidden.</td></tr>
+              <tr><th scope="row">Logs and automation</th><td>CloudWatch, CloudTrail and Lambda in the same account.</td><td>Own dashboard; full log export on higher plans.</td></tr>
+              <tr><th scope="row">Cost</th><td>WAF: $5 per web ACL and $1 per rule per month, plus $0.60 per million requests. Shield Advanced: from $3,000 a month, one-year commitment.</td><td>Free tier available; paid plans per month.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="body" style="margin-top:16px">The webshop already ran on AWS, so I built the AWS option: protection, logs and automation in one account, with Lambda able to change WAF rules directly.</p>
+
+        <h3>Shield Standard or Shield Advanced?</h3>
+        <p class="body">Shield Standard already absorbs common network floods at no cost. Shield Advanced adds layer-7 detection, the Shield Response Team, cost protection against scaling charges during an attack, and WAF fees included for protected resources. At $3,000 a month with a one-year commitment, plus data transfer fees, it pays off for large sites that are attacked often, not for a small webshop. The design therefore uses Shield Standard with a well-tuned WAF, and keeps Advanced as the upgrade path.</p>
+
+        <h3>What I built</h3>
+        <ul class="ticks body">
+          <li><strong>Network.</strong> A VPC with the EC2 webshop instances in private subnets. Security groups allow web traffic only from the load balancer, so the servers cannot be reached directly.</li>
+          <li><strong>Edge filtering.</strong> An AWS WAF web ACL on the load balancer with AWS managed rule groups (core rule set, known bad inputs, IP reputation list) and a rate-based rule that blocks any IP sending too many requests in a five-minute window.</li>
+          <li><strong>Logging.</strong> WAF logs, VPC Flow Logs and CloudTrail collected in CloudWatch Logs, with CloudWatch Logs Insights queries to answer "who, what, when" after an incident.</li>
+          <li><strong>Alerting.</strong> CloudWatch alarms on blocked-request and request-count metrics, so an attack is noticed while it happens.</li>
+          <li><strong>Automated response.</strong> A Lambda function reads the logs, finds offending IPs and adds them to a WAF IP set that is blocked, closing the loop without manual work.</li>
+          <li><strong>Infrastructure as code.</strong> Everything defined in Terraform, so the setup can be reviewed, rebuilt and torn down.</li>
+        </ul>
+
+        <figure>
+          <div class="diagram" role="img" aria-label="Request path: incoming traffic, then Shield and WAF, then the webshop on EC2 inside the VPC. Log path: CloudTrail and VPC Flow Logs, then CloudWatch, then Lambda, which updates the WAF rules.">
+            <p class="row-label label">Request →</p>
+            <div class="grid">
+              <div class="node"><span class="meta">01</span><strong>Incoming traffic</strong><span>Customers and attackers</span></div>
+              <div class="node"><span class="meta">02</span><strong>AWS Shield + WAF</strong><span>Absorb and filter</span></div>
+              <div class="node"><span class="meta">03</span><strong>Webshop on EC2</strong><span>Inside the VPC</span></div>
+            </div>
+            <p class="row-label label">Logs →</p>
+            <div class="grid">
+              <div class="node"><span class="meta">04</span><strong>WAF logs, CloudTrail, VPC Flow Logs</strong><span>Who did what, what flowed where</span></div>
+              <div class="node"><span class="meta">05</span><strong>CloudWatch</strong><span>One place to read and alert</span></div>
+              <div class="node"><span class="meta">06</span><strong>Lambda</strong><span>Updates WAF rules, back to 02</span></div>
+            </div>
+          </div>
+          <figcaption class="meta">Fig. 1 · Request path and log path.</figcaption>
+        </figure>
+
+        <h3>How I tested it</h3>
+        <p class="body">In a test environment I sent request bursts above the rate limit and requests matching known-bad patterns, then checked three things: WAF blocked them, the CloudWatch metrics and alarms showed the attack, and the Lambda function added the source to the block list.</p>
+      </section>
+
+      <section class="case-block block" id="result">
+        <p class="label">03 · Result</p>
+        <h2 class="section-title">Assessed Outstanding.</h2>
+        <p class="body">Final presentation on 8 February 2024, graded Outstanding by Fontys. The final design filters flood traffic at the edge before it reaches the servers, and every blocked request can be traced afterwards in one place.</p>
+      </section>
+
+      <section class="case-block block" id="lessons">
+        <p class="label">04 · Lessons</p>
+        <h2 class="section-title">What I would keep, and what I would do differently.</h2>
+        <ol class="lessons body">
+          <li><span class="meta">L1</span><p>Start with the free layer. Shield Standard plus tuned WAF rules covers most of what a small shop faces. Paying for Shield Advanced is a business decision about risk, not a default.</p></li>
+          <li><span class="meta">L2</span><p>Logs only help if they are in one place and you can query them. Collecting them is easy; deciding the questions you will ask during an incident is the real work.</p></li>
+          <li><span class="meta">L3</span><p>Following one request from the edge to the server and back through the logs is the same skill I now use every day on payment requests and webhooks.</p></li>
+        </ol>
+      </section>
+
+      <section class="case-block block" id="tools">
+        <p class="label">05 · Tools</p>
+        <div class="tags" style="margin-top:16px">
+          <span class="tag">AWS WAF</span><span class="tag">AWS Shield</span><span class="tag">CloudWatch</span><span class="tag">CloudWatch Logs Insights</span><span class="tag">CloudTrail</span><span class="tag">VPC Flow Logs</span><span class="tag">EC2</span><span class="tag">VPC</span><span class="tag">IAM</span><span class="tag">Lambda</span><span class="tag">Terraform</span><span class="tag">Cloudflare (compared)</span>
+        </div>
+      </section>
+
+      <nav class="pager" aria-label="Projects">
+        <a class="text-link" href="/projects/">← All projects</a>
+        <a class="text-link" href="/projects/#p-002">Next: P-002 IT Roadmap generator →</a>
+      </nav>
+    </div>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <span class="meta">Last entry: 2026-11</span>
+    <span class="meta">Muhammad Bibi · Netherlands</span>
+  </div>
+</footer>
+</body>
+</html>
