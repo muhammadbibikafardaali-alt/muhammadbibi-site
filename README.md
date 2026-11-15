@@ -46,7 +46,7 @@ then commit the new PDF. (Vercel cannot run WeasyPrint, so the PDF is made on yo
 
 ## Deploy
 
-Vercel runs `pip install -r requirements.txt && python3 build.py` and publishes `public/`
+Vercel installs `requirements.txt` by itself, then runs `python3 build.py` and publishes `public/`
 (see `vercel.json`). Push to `main` and the site updates.
 
 ## Contact form
