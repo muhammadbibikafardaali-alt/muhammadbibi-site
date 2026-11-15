@@ -1,38 +1,15 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>DDoS mitigation and log management on AWS · Muhammad Bibi</title>
-  <meta name="description" content="Case study: keeping a webshop available under DDoS attack with AWS Shield, AWS WAF, CloudWatch and Lambda, compared with Cloudflare. Fontys graduation project, assessed Outstanding.">
-  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:wght@500&display=swap">
-  <link rel="stylesheet" href="/assets/style.css">
-</head>
-<body>
-<a class="skip" href="#main">Skip to content</a>
+{#- case_ddos.html: the hand-written DDoS case study (richer than the standard project page). -#}
+{% extends "base.html" %}
+{% from "_macros.html" import status_label %}
+{% block title %}DDoS mitigation and log management on AWS · {{ site.name }}{% endblock %}
+{% block description %}Case study: keeping a webshop available under DDoS attack with AWS Shield, AWS WAF, CloudWatch and Lambda, compared with Cloudflare. Fontys graduation project, assessed Outstanding.{% endblock %}
 
-<header class="site-header">
-  <div class="wrap">
-    <a class="brand" href="/">Muhammad Bibi</a>
-    <nav class="nav" aria-label="Main">
-      <a href="/">Home</a>
-      <a href="/experience/">Experience</a>
-      <a href="/projects/" aria-current="page">Projects</a>
-      <a href="/contact/">Contact</a>
-      <a class="push" href="/cv/">CV</a>
-    </nav>
-  </div>
-</header>
-
-<main id="main" class="wrap">
+{% block content %}
 
   <section>
     <p class="crumbs meta"><a href="/projects/">Projects</a> / P-001</p>
     <div class="case-top">
-      <span class="status filled delivered">Delivered</span>
+      {{ status_label("done", filled=true) }}
       <span class="meta">2023-09 → 2024-02</span>
       <span class="meta">Graduation project · Fontys</span>
     </div>
@@ -48,7 +25,7 @@
       <div><span class="label">Standards considered</span>ISO 27001 · NEN 7510 · PCI DSS</div>
       <div><span class="label">Compared</span>AWS Shield + WAF vs Cloudflare</div>
       <figure style="margin-top:8px">
-        <img src="/assets/graduation.webp" width="440" height="550" loading="lazy" alt="Muhammad in a graduation gown and cap, seen from behind" style="aspect-ratio:4/5; object-fit:cover; border-radius:2px">
+        <img src="/img/graduation.webp" width="440" height="550" loading="lazy" alt="Muhammad in a graduation gown and cap, seen from behind" style="aspect-ratio:4/5; object-fit:cover; border-radius:2px">
         <figcaption class="meta">Graduation, February 2024.</figcaption>
       </figure>
     </aside>
@@ -142,18 +119,9 @@
 
       <nav class="pager" aria-label="Projects">
         <a class="text-link" href="/projects/">← All projects</a>
-        <a class="text-link" href="/projects/#p-002">Next: P-002 IT Roadmap generator →</a>
+        {%- if next_p %}<a class="text-link" href="/projects/{{ next_p.slug }}/">Next: {{ next_p.title }} →</a>{% endif %}
       </nav>
     </div>
   </div>
 
-</main>
-
-<footer class="site-footer">
-  <div class="wrap">
-    <span class="meta">Last entry: 2026-11</span>
-    <span class="meta">Muhammad Bibi · Netherlands</span>
-  </div>
-</footer>
-</body>
-</html>
+{% endblock %}

@@ -1,0 +1,41 @@
+{#- base.html: the frame every page shares (head, menu, footer).
+    Each page "extends" this file and fills in the {% block %} parts. -#}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}{{ site.name }}{% endblock %}</title>
+  <meta name="description" content="{% block description %}{% endblock %}">
+  {%- block meta %}{% endblock %}
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="/fonts/ibm-plex-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="/">{{ site.name }}</a>
+    <nav class="nav" aria-label="Main">
+      {%- for item in site.nav %}
+      <a href="{{ item.href }}"{% if item.page == page %} aria-current="page"{% endif %}>{{ item.label }}</a>
+      {%- endfor %}
+      <a class="push" href="/cv/"{% if page == 'cv' %} aria-current="page"{% endif %}>CV</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="wrap">
+{% block content %}{% endblock %}
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <span class="meta">Last entry: {{ site.last_entry }}</span>
+    <span class="meta">{{ site.name }} · {{ site.location }}</span>
+  </div>
+</footer>
+</body>
+</html>

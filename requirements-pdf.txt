@@ -1,0 +1,2 @@
+# Only needed for `python3 build.py --pdf` (makes the CV PDF on your own computer)
+weasyprint>=62

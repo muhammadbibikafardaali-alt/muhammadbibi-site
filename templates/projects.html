@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% from "_macros.html" import project_entry, status_label %}
+{% block title %}Projects · {{ site.name }}{% endblock %}
+{% block description %}Projects by {{ site.name }}: {% for p in projects %}{{ p.title }}{% if not loop.last %}; {% endif %}{% endfor %}.{% endblock %}
+
+{% block content %}
+  <section>
+    <p class="label">Projects · {{ projects | length }} entries · newest first</p>
+    <h1 class="page-title" style="margin-top:16px">Each project is written up as a small case study.</h1>
+    <p class="lead muted" style="margin-top:16px">The problem, who it is for, what I built, and how. The status says honestly how far each one is.</p>
+    <div class="legend">
+      <span>{{ status_label("done") }}<span class="meta">finished and in use</span></span>
+      <span>{{ status_label("progress") }}<span class="meta">being built now</span></span>
+      <span>{{ status_label("learning") }}<span class="meta">a project I learn with</span></span>
+    </div>
+  </section>
+
+  <section>
+    <ol class="log">
+      {%- for p in projects %}
+      {{ project_entry(p, full=true) }}
+      {%- endfor %}
+      <li class="entry is-next">
+        <div class="entry-meta"></div>
+        <div class="entry-body"><p class="next-slot">Next entry goes here</p></div>
+      </li>
+    </ol>
+  </section>
+{% endblock %}

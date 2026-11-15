@@ -1,0 +1,54 @@
+# Skills.
+# "groups" -> the Skills page: what I use, with evidence where there is some.
+#             Add "status: learning" to a group to show the Learning label.
+#             Tip: put text in "quotes" when it contains a comma.
+# "cv"     -> the CV: plain list, no levels.
+
+groups:
+  - name: Use every day at work
+    items:
+      - { skill: REST APIs and webhooks, note: "Reading requests, responses, headers and webhook payloads to find why a payment failed." }
+      - { skill: Checkout and point-of-sale integrations, note: E-commerce and in-store payment flows. }
+      - { skill: Magento and Salesforce Commerce Cloud, note: Payment plugins and platform integrations. }
+      - { skill: Log analysis and debugging, note: Following one request through the logs until the cause is found. }
+      - { skill: "Postman, Jira, Salesforce", note: "Reproducing calls, tracking cases, working with developers." }
+
+  - name: Hands-on, with evidence on GitHub
+    items:
+      - skill: Linux administration
+        note: "Lab notes on SSH hardening, systemd and journalctl, nginx troubleshooting, permissions, processes and networking."
+        link: { label: skills repository, href: "https://github.com/muhammadbibikafardaali-alt/skills" }
+      - skill: Web apps
+        note: "Two web apps shipped and in use, one in progress, built with React, Next.js and TypeScript and deployed on Vercel."
+        link: { label: projects, href: /projects/ }
+      - skill: AWS and Terraform
+        note: Graduation project on AWS WAF, Shield, CloudWatch, Lambda and Terraform, assessed Outstanding.
+        link: { label: case study, href: /projects/ddos-aws/ }
+
+  - name: Learning now
+    status: learning
+    items:
+      - skill: Python
+        note: "Fundamentals: conditions, lists, loops, scope and state, through a command-line ATM simulator. Next: while loops, functions, then SQL and APIs. Small Python tools in my projects check content and generate audio, with unit tests."
+        link: { label: learning project, href: /projects/secure-payment-api/ }
+      - { skill: Web security, note: "PortSwigger Web Security Academy and Burp Suite." }
+      - { skill: Linux wargames, note: "OverTheWire Bandit." }
+
+# CV skills: what I have, no levels.
+cv:
+  - name: Payments and integrations
+    items: [REST APIs, Webhooks, Checkout and POS, Magento, Salesforce Commerce Cloud, Log analysis]
+  - name: Cloud and security
+    items: [AWS, Terraform, Linux, Web security, Burp Suite, OSINT]
+  - name: Programming and tools
+    items: [Python, React, Next.js, TypeScript, Postman, Jira, Salesforce]
+
+languages:
+  - { name: Arabic, level: Native, dots: 5 }
+  - { name: English, level: Fluent, dots: 4 }
+  - { name: Dutch, level: B1, dots: 3 }
+
+education:
+  - { title: Associate Degree ICT, detail: Infrastructure Engineering and Cloud Computing, meta: "Fontys · 2021 → 2024 · graduation project assessed Outstanding" }
+
+certifications: [AWS Security Essentials, AWS Cloud Foundations]

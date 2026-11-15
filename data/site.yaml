@@ -1,0 +1,25 @@
+# General site settings and contact details.
+# Change a value here and run `python3 build.py`. Every page picks it up.
+
+name: Muhammad Bibi
+role: Technical Support Engineer, Payments
+location: Netherlands
+url: https://muhammadbibi.vercel.app
+last_entry: "2026-11"
+
+email: muhammad.bibikafardaali@gmail.com
+linkedin: https://www.linkedin.com/in/muhammad-bibi-kafardaali-1b8560182/
+linkedin_label: linkedin.com/in/muhammad-bibi-kafardaali
+github: https://github.com/muhammadbibikafardaali-alt
+github_label: github.com/muhammadbibikafardaali-alt
+
+# The CV PDF that the "Download PDF" button links to (made by `python3 build.py --pdf`).
+cv_pdf: /cv/Muhammad-Bibi-CV.pdf
+
+# Main menu. "page" must match the page name used in build.py.
+nav:
+  - { page: home, label: Home, href: / }
+  - { page: experience, label: Experience, href: /experience/ }
+  - { page: projects, label: Projects, href: /projects/ }
+  - { page: skills, label: Skills, href: /skills/ }
+  - { page: contact, label: Contact, href: /contact/ }
