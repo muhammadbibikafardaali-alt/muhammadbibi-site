@@ -1,0 +1,34 @@
+{#- _macros.html: small reusable pieces, like functions in Python.
+    Use them in a page with:  {% from "_macros.html" import status_label %} -#}
+
+{# The words shown for each status value in the YAML files. #}
+{% set STATUS_TEXT = {"done": "Done", "progress": "In progress", "learning": "Learning"} %}
+
+{# A coloured status label, e.g. status_label("done") -> ■ DONE #}
+{% macro status_label(status, filled=false) -%}
+<span class="status {{ status }}{% if filled %} filled{% endif %}">{{ STATUS_TEXT[status] }}</span>
+{%- endmacro %}
+
+{# A row of small grey tags. #}
+{% macro tags(items) -%}
+<div class="tags">{% for t in items %}<span class="tag">{{ t }}</span>{% endfor %}</div>
+{%- endmacro %}
+
+{# One project as a timeline entry (used on Home and Projects). #}
+{% macro project_entry(p, heading="h2", full=false) -%}
+<li class="entry is-{{ p.status }}" id="{{ p.id | lower }}" data-status="{{ p.status }}">
+  <div class="entry-meta">
+    <span class="meta">{{ p.id }} · {{ p.year }}</span>
+    {{ status_label(p.status) }}
+  </div>
+  <div class="entry-body">
+    <{{ heading }} class="entry-title"><a href="/projects/{{ p.slug }}/">{{ p.title }}</a></{{ heading }}>
+    <p class="body">{{ p.summary }}</p>
+    {% if full %}{{ tags(p.stack) }}{% endif %}
+    <p class="links">
+      <a class="text-link" href="/projects/{{ p.slug }}/">{% if p.custom_page %}Read the case study{% else %}See the project{% endif %} →</a>
+      {%- if full and p.links.live %} <a class="text-link" href="{{ p.links.live }}" rel="noopener">Live site ↗</a>{% endif %}
+    </p>
+  </div>
+</li>
+{%- endmacro %}

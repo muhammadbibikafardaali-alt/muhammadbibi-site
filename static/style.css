@@ -1,6 +1,14 @@
 /* Running Log — design system v1 · Muhammad Bibi
    Plain CSS, no JavaScript. Colours and fonts are variables, as on the design board. */
 
+/* Fonts are hosted on this site (no Google request): IBM Plex, SIL Open Font License, see fonts/OFL.txt */
+@font-face { font-family: "IBM Plex Sans"; font-weight: 400; font-display: swap; src: url("/fonts/ibm-plex-sans-latin-400-normal.woff2") format("woff2"), url("/fonts/ibm-plex-sans-latin-400-normal.woff") format("woff"); }
+@font-face { font-family: "IBM Plex Sans"; font-weight: 500; font-display: swap; src: url("/fonts/ibm-plex-sans-latin-500-normal.woff2") format("woff2"), url("/fonts/ibm-plex-sans-latin-500-normal.woff") format("woff"); }
+@font-face { font-family: "IBM Plex Sans"; font-weight: 600 700; font-display: swap; src: url("/fonts/ibm-plex-sans-latin-600-normal.woff2") format("woff2"), url("/fonts/ibm-plex-sans-latin-600-normal.woff") format("woff"); }
+@font-face { font-family: "IBM Plex Serif"; font-weight: 500; font-display: swap; src: url("/fonts/ibm-plex-serif-latin-500-normal.woff2") format("woff2"), url("/fonts/ibm-plex-serif-latin-500-normal.woff") format("woff"); }
+@font-face { font-family: "IBM Plex Mono"; font-weight: 400; font-display: swap; src: url("/fonts/ibm-plex-mono-latin-400-normal.woff2") format("woff2"), url("/fonts/ibm-plex-mono-latin-400-normal.woff") format("woff"); }
+@font-face { font-family: "IBM Plex Mono"; font-weight: 500; font-display: swap; src: url("/fonts/ibm-plex-mono-latin-500-normal.woff2") format("woff2"), url("/fonts/ibm-plex-mono-latin-500-normal.woff") format("woff"); }
+
 :root {
   --bg: #F3F5F4;
   --surface: #FBFCFB;
@@ -20,8 +28,10 @@
   color-scheme: light dark;
 }
 
+/* Dark colours: used when the device is in dark mode (unless the visitor chose light),
+   or when the visitor picked dark with the theme button (data-theme="dark" on <html>). */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
     --bg: #0F1513;
     --surface: #171F1C;
     --ink: #E7EDEA;
@@ -33,6 +43,19 @@
     --progress-tint: #3A2A12;
   }
 }
+:root[data-theme="dark"] {
+    --bg: #0F1513;
+    --surface: #171F1C;
+    --ink: #E7EDEA;
+    --muted: #9DAAA5;
+    --rule: #2D3834;
+    --delivered: #62CDB1;
+    --delivered-tint: #12332B;
+    --progress: #EBA650;
+    --progress-tint: #3A2A12;
+  color-scheme: dark;
+}
+:root[data-theme="light"] { color-scheme: light; }
 
 /* ---------- Base ---------- */
 *, *::before, *::after { box-sizing: border-box; }
@@ -134,7 +157,8 @@ section + section { margin-top: clamp(56px, 8vw, 96px); }
   content: ""; position: absolute; inset-inline-start: -33px; top: 36px;
   width: 9px; height: 9px; background: var(--muted); outline: 4px solid var(--bg); border-radius: 1px;
 }
-.entry.is-delivered::before { background: var(--delivered); }
+.entry.is-done::before { background: var(--delivered); }
+.entry.is-learning::before { background: var(--bg); border: 1.5px dashed var(--muted); }
 .entry.is-progress::before { background: var(--progress); }
 .entry.is-next::before { background: var(--bg); border: 1px dashed var(--muted); }
 .entry-meta { flex: 0 0 var(--meta-col); display: flex; flex-direction: column; gap: 6px; }
@@ -151,16 +175,20 @@ section + section { margin-top: clamp(56px, 8vw, 96px); }
 .kv b { font: 500 12px/1.5 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-inline-end: 8px; }
 
 /* ---------- Status ---------- */
-.status { display: inline-flex; align-items: center; gap: 8px; font: 500 12px/1.5 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; }
+.status { display: inline-flex; align-items: center; gap: 8px; font: 500 12px/1.5 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; white-space: nowrap; }
 .status::before { content: ""; width: 10px; height: 10px; border: 1.5px solid currentColor; border-radius: 1px; }
-.status.delivered { color: var(--delivered); }
-.status.delivered::before { background: currentColor; }
+.status.done { color: var(--delivered); }
+.status.done::before { background: currentColor; }                       /* full square = done */
 .status.progress { color: var(--progress); }
-.status.progress::before { background: linear-gradient(to right, currentColor 50%, transparent 50%); }
+.status.progress::before { background: linear-gradient(to right, currentColor 50%, transparent 50%); }  /* half = in progress */
 .status.learning { color: var(--muted); }
+.status.learning::before { border-style: dashed; }                       /* dashed outline = learning */
 .status.filled { padding: 4px 10px; border-radius: 2px; }
-.status.filled.delivered { background: var(--delivered-tint); }
+.status.filled.done { background: var(--delivered-tint); }
 .status.filled.progress { background: var(--progress-tint); }
+.status.filled.learning { background: transparent; outline: 1px dashed var(--rule); }
+.legend { display: flex; flex-wrap: wrap; gap: 10px 28px; margin-top: 24px; }
+.legend > span { display: inline-flex; align-items: center; gap: 10px; }
 
 /* ---------- Tags ---------- */
 .tags { display: flex; flex-wrap: wrap; gap: 8px; }
@@ -245,7 +273,7 @@ th { font: 500 12px/1.5 var(--mono); letter-spacing: 0.08em; text-transform: upp
 .cv-contact a { color: inherit; text-decoration: none; }
 .cv-cols { display: flex; flex-wrap: wrap; gap: 32px 48px; }
 .cv-main { flex: 1 1 440px; min-width: 0; }
-.cv-side { flex: 1 1 220px; min-width: 0; }
+.cv-side { flex: 1 1 220px; min-width: 0; order: 2; }  /* shown on the right on screen */
 .cv h2 { display: flex; align-items: center; gap: 8px; font: 500 12px/1.5 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink); margin: 0 0 12px; }
 .cv h2::before { content: ""; width: 8px; height: 8px; background: var(--delivered); }
 .cv h2::after { content: ""; flex: 1; height: 1px; background: var(--rule); }
@@ -276,9 +304,9 @@ th { font: 500 12px/1.5 var(--mono); letter-spacing: 0.08em; text-transform: upp
 .cv-tools { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; margin-bottom: 24px; max-width: 920px; }
 
 @media print {
-  @page { size: A4; margin: 14mm; }
+  @page { size: A4; margin: 12mm 13mm; }
   :root { --bg: #fff; --surface: #fff; --ink: #000; --muted: #444; --rule: #bbb; }
-  body { font-size: 10pt; line-height: 1.4; background: #fff; }
+  body { font-size: 10pt; line-height: 1.36; background: #fff; }
   .cv-head { padding-bottom: 10px; margin-bottom: 16px; }
   .cv-head .role { font-size: 12pt; }
   .cv h2 { margin-bottom: 6px; }
@@ -286,7 +314,7 @@ th { font: 500 12px/1.5 var(--mono); letter-spacing: 0.08em; text-transform: upp
   .cv-item ul { margin-top: 3px; }
   .ticks li + li { margin-top: 2px; }
   .cv-main > section:first-child p { font-size: 9.5pt !important; }
-  .site-header, .site-footer, .cv-tools, .skip { display: none !important; }
+  .site-header, .site-footer, .cv-tools, .skip, .theme-toggle { display: none !important; }
   main { padding: 0; }
   .wrap { padding: 0; max-width: none; }
   .cv { border: 0; padding: 0 0 0 16px; max-width: none; }
@@ -297,14 +325,44 @@ th { font: 500 12px/1.5 var(--mono); letter-spacing: 0.08em; text-transform: upp
   .cv-contact { font-size: 8.5pt; }
   .chips li { font-size: 8.5pt; padding: 2px 6px; }
   .cv-head h1 { font-size: 24pt; }
-  .cv section + section { margin-top: 14px; }
-  .cv-item + .cv-item { margin-top: 10px; }
+  .cv section + section { margin-top: 11px; }
+  .cv-item + .cv-item { margin-top: 8px; }
   .cv-item ul, .cv-item p, .cv-side li { font-size: 9.5pt; }
-  .cv-cols { gap: 0 28px; flex-wrap: nowrap; }
-  .cv-main { flex: 1 1 62%; }
-  .cv-side { flex: 0 0 32%; }
+  /* Two columns with floats: they can continue onto page 2 in every PDF tool (flex cannot). */
+  .cv-cols { display: block; }
+  .cv-cols::after { content: ""; display: block; clear: both; }
+  .cv-side { float: right; width: 31%; }
+  .cv-main { margin-right: 35%; }
+  .chips { display: block; }
+  .chips li { display: inline-block; margin: 0 3px 4px 0; }
+  .cv-item { break-inside: avoid; }
+  .cv-group { margin: 8px 0 4px; }
   a { text-decoration: none; }
 }
+
+/* ---------- Theme button and project filter (only shown when JavaScript runs) ---------- */
+.theme-toggle { font: 500 13px/1 var(--mono); color: var(--muted); background: none; border: 1px solid var(--rule); border-radius: 2px; padding: 7px 10px; cursor: pointer; margin-inline-start: 16px; align-self: center; }
+.theme-toggle:hover { color: var(--ink); border-color: var(--ink); }
+.filter { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; }
+.filter[hidden], .theme-toggle[hidden] { display: none; }
+.filter button { font: 500 12px/1.5 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); background: none; border: 1px solid var(--rule); border-radius: 2px; padding: 6px 12px; cursor: pointer; }
+.filter button:hover { color: var(--ink); border-color: var(--ink); }
+.filter button[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.entry[hidden] { display: none; }
+
+/* ---------- Project screenshots ---------- */
+.shots { display: grid; gap: 24px; grid-template-columns: repeat(auto-fit, minmax(min(420px, 100%), 1fr)); margin-top: 48px; }
+.shot { margin: 0; }
+.shot img { width: 100%; border: 1px solid var(--rule); border-radius: 2px; background: var(--surface); }
+
+/* ---------- Skills page ---------- */
+.skill-list { display: grid; gap: 0 48px; grid-template-columns: repeat(auto-fit, minmax(min(420px, 100%), 1fr)); }
+.skill-list li { border-top: 1px solid var(--rule); padding-block: 16px; }
+.skill-list h3 { font: 600 17px/1.35 var(--sans); }
+.skill-list p { color: var(--muted); font-size: 16px; margin-top: 4px; }
+.skill-list .text-link { color: var(--ink); }
+
+.cv-link { font: 400 0.9em/1.4 var(--mono); color: var(--muted); text-decoration: none; white-space: nowrap; }
 
 /* ---------- Form ---------- */
 .form { display: grid; gap: 8px; background: var(--surface); border: 1px solid var(--rule); border-radius: 2px; padding: clamp(20px, 3vw, 32px); }

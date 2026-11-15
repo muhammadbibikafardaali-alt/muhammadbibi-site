@@ -1,0 +1,144 @@
+# Projects, newest first.
+# Each project gets its own page at /projects/<slug>/ and a line on the CV.
+#
+# status: done | progress | learning   (shown as Done / In progress / Learning)
+# featured: true  -> shown on the Home page
+# learned: leave empty [] until you have written it; the section is then hidden.
+# cv: one line for the CV (projects without it are left off the CV).
+
+- slug: secure-payment-api
+  id: P-005
+  year: "2026"
+  title: Secure Payment API Platform
+  status: learning
+  featured: false
+  summary: My Python learning project. It starts as a command-line ATM and grows, stage by stage, towards a tested payment API.
+  problem: I debug payment APIs every day. I want to be able to build one properly, in Python.
+  who: Me. It is how I practise Python on problems that look like my daily work.
+  role: Solo learning project.
+  built:
+    - "Stage 1, under way: a command-line ATM with balances, withdrawals, approvals and rejections, and blocked accounts."
+  how: >-
+    Plain Python, practising conditions, lists, loops, scope and state. Later stages are planned, not built:
+    SQL storage, an API, Docker, cloud deployment and security checks.
+  stack: [Python]
+  stages: ["1 CLI ATM", "2 SQL", "3 API", "4 Docker", "5 Cloud", "6 Security checks"]
+  stage_now: 1
+  screenshots: []
+  learned: []
+  links:
+    github: https://github.com/muhammadbibikafardaali-alt
+
+- slug: norah
+  id: P-004
+  year: "2026"
+  title: "Norah: bilingual family language app"
+  status: progress
+  featured: true
+  cv: "Dutch and Arabic picture game for young children, built around family routines. React, TypeScript, Expo, Python tooling."
+  summary: A picture game and app that help a young child learn Dutch and Arabic together through everyday family routines. The parent is the product.
+  problem: >-
+    Children who grow up in the Netherlands with Arabic-speaking parents pick up Dutch at school,
+    but the home language needs daily practice. Most language apps are built for a child alone,
+    with accounts, scores and screens, not for a parent and child doing everyday things together.
+  who: Arabic-speaking families in the Netherlands with young children, around six years old, who cannot read yet.
+  role: "Solo project: idea, learning design, Arabic and Dutch content, and product decisions. My own coding language is Python; for React and TypeScript, AI is my coding partner."
+  built:
+    - "Home screen with picture cards for each scene: kitchen, bathroom, bedroom, living room, farm and town."
+    - "Kitchen scene with 12 things: tap one and a card shows the picture, the Dutch word with de/het and the Arabic word with harakat, and speaks both."
+    - "A find game (“Waar is de appel? / وين التفاحة؟”) with gentle feedback: no buzzer, no red, a hint after two misses."
+    - Progress per scene saved on the device. No accounts, no backend, no ads, no tracking.
+  how: >-
+    A standalone web game in React, TypeScript and Vite, next to an Expo / React Native app in the same repository.
+    All words live in one JSON file, so a new scene is new data, not new code. Python tools check the word list
+    and generate missing Dutch and Arabic audio, with unit tests.
+  stack: [React, TypeScript, Vite, Expo, React Native, Python, localStorage, RTL]
+  next: The bathroom scene, then the other rooms.
+  screenshots:
+    - { src: /img/projects/norah-kitchen.webp, w: 1024, h: 700, alt: "The kitchen scene: a fridge, sink, pot, fruit on a shelf, a table and a cat, drawn in soft colours.", caption: "The kitchen scene. Every object can be tapped." }
+    - { src: /img/projects/norah-word-card.webp, w: 1024, h: 700, alt: "A word card showing an apple, “de appel” in Dutch and “تُفّاحة” in Arabic with a transliteration.", caption: "A word card: Dutch first, then Arabic, both spoken aloud." }
+  learned:
+    - Every project has its own users and needs. Children are not students: for kids the path should be strict and simple, with their progress drawn on screen and made fun.
+    - Graphics and UX are part of the content. A child who cannot read needs pictures, sound and big, forgiving tap targets.
+    - Working through pull requests and version control, with automated checks (CI/CD), so I review every change before it goes live.
+  links:
+    private: The code is in a private repository.
+
+- slug: insider-quiz
+  id: P-003
+  year: "2026"
+  title: "The Insider: IT practice platform"
+  status: done
+  featured: true
+  cv: "Bilingual Arabic and English IT quiz platform: 15 tracks, about 730 questions, levels unlock at 70%. Next.js, TypeScript, Tailwind."
+  summary: A bilingual Arabic and English quiz platform where students test themselves on Linux, networking, cybersecurity, cloud and programming.
+  problem: >-
+    Testing yourself is the fastest way to make knowledge stick (active recall). Students starting in IT
+    had no free, structured way to check what they really know, and little of it was in Arabic.
+  who: Arabic-speaking IT students and junior professionals.
+  role: "Solo project: idea, question content and product decisions. My own coding language is Python; for React and TypeScript, AI is my coding partner."
+  built:
+    - 15 tracks, from Linux, networking and cybersecurity to cloud, DevOps, Python and AI prompting, with about 730 questions.
+    - Up to five levels per track, ten questions each. The next level unlocks at 70%.
+    - Progress per level (best score, attempts, XP, streaks and weak topics) saved in the browser.
+    - Full Arabic and English, with right-to-left layout.
+  how: >-
+    Next.js App Router with a dynamic route per track and level. Questions live in typed TypeScript data files,
+    so adding a track means adding one file. No backend: the site is static and progress stays on the device.
+    Answer options were rebalanced so the correct one never stands out by length.
+  stack: [Next.js 15, React 19, TypeScript, Tailwind CSS, i18n / RTL, Vercel]
+  screenshots:
+    - { src: /img/projects/quiz-home.webp, w: 1280, h: 800, alt: "The Insider home page in Arabic: 15 tracks, 5 levels, 730 questions, and track cards for AI prompting, Python and web development.", caption: "Home: pick a track. Each card shows your progress." }
+    - { src: /img/projects/quiz-question.webp, w: 1280, h: 800, alt: "A Linux level 1 question in Arabic asking which command lists files, with four answer options.", caption: "A question in the Linux track, level 1." }
+  learned:
+    - Every project has its own users and needs. Students who test themselves need clear levels, honest feedback and progress they can see.
+    - Working through pull requests and version control, with automated checks (CI/CD), so I review every change before it goes live.
+    - Security is a big part of my training. I test my own projects and try to break into them, which taught me more about testing than any course.
+  links:
+    live: https://the-insider-quiz.vercel.app
+    github: https://github.com/muhammadbibikafardaali-alt/TheInsiderQuiz
+
+- slug: it-roadmap
+  id: P-002
+  year: "2026"
+  title: IT Roadmap
+  status: done
+  featured: false
+  cv: "Turns six answers into a phased IT learning plan with free resources; content checked by a Python script with unit tests. React, Vite."
+  summary: Helps people choose an IT path and turns six answers into a personal, phased learning plan with free resources.
+  problem: >-
+    People starting in IT often do not know which field suits them, or where to start once they choose one.
+    There are too many resources and no plan to follow.
+  who: First-year students and career switchers, in Arabic.
+  role: "Solo project: idea, roadmap content, resources and product decisions. My own coding language is Python; for React and TypeScript, AI is my coding partner."
+  built:
+    - "Six questions: the track (front end, back end, full stack, cybersecurity, data, mobile, DevOps or networking), level, hours per week, goal, main obstacle and device."
+    - "A personal plan: phases with topics, a hands-on project and free resources. The total length scales with your hours and shows an estimated finish month."
+    - Progress tracking with checkboxes, a share link, and a print / save-as-PDF version.
+  how: >-
+    React and Vite, fully client-side. All roadmap content lives in one JSON file, kept separate from the code,
+    and a small Python script (standard library only, with unit tests) checks that content for missing fields
+    and broken structure. The plan logic has its own tests.
+  stack: [React, Vite, JavaScript, Python, localStorage, RTL, Vercel]
+  screenshots:
+    - { src: /img/projects/roadmap-plan.webp, w: 1280, h: 800, alt: "A personal cybersecurity roadmap in Arabic: 39 weeks, about 9 months, 390 study hours, 5 phases, with share and print buttons.", caption: "A plan for cybersecurity, beginner, 10 hours a week." }
+    - { src: /img/projects/roadmap-wizard.webp, w: 1280, h: 800, alt: "Step 1 of 7 in Arabic: choose your IT track, with eight track cards.", caption: "Step 1: choose a track." }
+  learned:
+    - Every project has its own users and needs. Students need flexibility, so the roadmap lets each student shape their own path instead of following one fixed route.
+    - Working through pull requests and version control, with automated checks (CI/CD), so I review every change before it goes live.
+    - Security is a big part of my training. I test my own projects and try to break into them, which taught me more about testing than any course.
+  links:
+    live: https://it-roadmap-three.vercel.app
+    github: https://github.com/muhammadbibikafardaali-alt/it-roadmap
+
+- slug: ddos-aws
+  id: P-001
+  year: "2024"
+  title: DDoS mitigation and log management on AWS
+  status: done
+  featured: true
+  custom_page: true   # this project has its own hand-written template: templates/case_ddos.html
+  summary: "Graduation project at Fontys: keeping a webshop available under attack and making its logs useful afterwards, with AWS WAF, Shield, CloudWatch and Lambda, compared against Cloudflare. Assessed Outstanding."
+  problem: A webshop has to stay available during an attack, and its logs have to explain afterwards what happened.
+  stack: [AWS WAF, AWS Shield, CloudWatch, CloudTrail, VPC Flow Logs, Lambda, Terraform]
+  links: {}

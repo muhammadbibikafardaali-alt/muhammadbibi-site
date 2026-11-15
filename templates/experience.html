@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% from "_macros.html" import tags %}
+{% block title %}Experience · {{ site.name }}{% endblock %}
+{% block description %}Technical Support Engineer at Adyen, CloudSecOps intern at iO, KYC Analyst at Adyen: what {{ site.name }} was responsible for and what came out of it.{% endblock %}
+
+{% block content %}
+  <section>
+    <p class="label">Experience · newest first</p>
+    <h1 class="page-title" style="margin-top:16px">What I was responsible for, and what came out of it.</h1>
+  </section>
+
+  <section>
+    <ol class="log">
+    {%- for job in experience %}
+      <li class="entry {% if job.current %}is-progress{% else %}is-done{% endif %}">
+        <div class="entry-meta wide">
+          <span class="meta">{{ job.dates }}</span>
+          <span class="meta">{{ job.kind }} · {{ site.location }}</span>
+        </div>
+        <div class="entry-body">
+          <h2 class="entry-title">{{ job.title }}</h2>
+          <p class="entry-sub">{{ job.company }}{% if job.team %} · {{ job.team }}{% endif %}</p>
+          <div class="two-col" style="margin-top:20px">
+            <div>
+              <p class="label" style="margin-bottom:10px">Responsibilities</p>
+              <ul class="ticks">{% for r in job.responsibilities %}<li>{{ r }}</li>{% endfor %}</ul>
+            </div>
+            <div>
+              <p class="label" style="margin-bottom:10px">Outcomes</p>
+              <ul class="ticks">
+                {%- for o in job.outcomes %}
+                <li>{{ o }}{% if loop.last and job.outcome_link %} <a href="{{ job.outcome_link.href }}">{{ job.outcome_link.label }} →</a>{% endif %}</li>
+                {%- endfor %}
+              </ul>
+            </div>
+          </div>
+
+          {%- if job.current %}
+          <p class="label" style="margin-top:32px">How a case moves through my hands</p>
+          <div class="grid flow" style="margin-top:12px">
+            <div class="card"><span class="meta"></span><h3>Escalation</h3><p>A payment or integration is failing.</p></div>
+            <div class="card"><span class="meta"></span><h3>Reproduce</h3><p>See the failure for myself.</p></div>
+            <div class="card"><span class="meta"></span><h3>Trace</h3><p>Request, webhook, logs.</p></div>
+            <div class="card"><span class="meta"></span><h3>Resolve</h3><p>Fix it, or hand developers a clear cause.</p></div>
+            <div class="card"><span class="meta"></span><h3>Write up</h3><p>Explain it so it is solved once.</p></div>
+          </div>
+          {%- endif %}
+
+          <div style="margin-top:24px">{{ tags(job.tags) }}</div>
+        </div>
+      </li>
+    {%- endfor %}
+    </ol>
+  </section>
+{% endblock %}

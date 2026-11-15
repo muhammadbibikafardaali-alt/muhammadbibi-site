@@ -1,34 +1,54 @@
 # muhammadbibi-site
 
-Personal portfolio and CV of Muhammad Bibi, live at https://muhammadbibi.vercel.app
+Personal portfolio and CV of Muhammad Bibi: https://muhammadbibi.vercel.app
 
-Plain HTML and CSS. No framework, no build step, no JavaScript.
+A static site built with **Python + Jinja2**. The only JavaScript is `static/site.js` (theme button and project filter); the site works without it.
+All the text lives in `data/*.yaml`, the layout in `templates/`, and `build.py` puts them together.
+
+## Run it on your computer
+
+```bash
+pip install -r requirements.txt     # Jinja2 and PyYAML
+python3 build.py --serve            # builds into public/ and opens a preview at http://localhost:8000
+```
 
 ## Where things are
 
-| Page | File |
+| What | File |
 |---|---|
-| Home | `index.html` |
-| Experience | `experience/index.html` |
-| Projects | `projects/index.html` |
-| DDoS case study | `projects/ddos-aws/index.html` |
-| Contact (+ form) | `contact/index.html`, `contact/thanks/index.html` |
-| CV (prints to one A4 page) | `cv/index.html` |
-| All styling and animations | `assets/style.css` |
-| Photos and icon | `assets/` |
+| Contact details, menu | `data/site.yaml` |
+| Jobs (Experience page and CV) | `data/experience.yaml` |
+| Projects (list, project pages, Home, CV) | `data/projects.yaml` |
+| Skills, languages, education (Skills page and CV) | `data/skills.yaml` |
+| Page layouts | `templates/*.html` (all extend `templates/base.html`) |
+| Styling and animations | `static/style.css` |
+| Photos, screenshots, fonts | `static/img/`, `static/fonts/` |
+| The build script (with comments) | `build.py` |
 
-## How to edit
+## Common edits
 
-1. Open the page file and change the text between the tags.
-2. Commit and push to `main`. Vercel deploys it automatically.
+- **Change text:** edit the YAML file, run `python3 build.py`, check, commit, push.
+- **Add a project:** copy one block in `data/projects.yaml`, give it a new `slug` and `id`,
+  set `status` to `done`, `progress` or `learning`. It gets its own page at `/projects/<slug>/` automatically.
+  Put screenshots in `static/img/projects/`.
+- **Tip:** in YAML, put text in "quotes" when it contains a comma or a colon.
 
-To add a project, copy one `<li class="entry ...">` block in `projects/index.html`
-and change the ID, date, status and text. Status classes: `is-delivered` + `status delivered`,
-or `is-progress` + `status progress`.
+## CV PDF
 
-Colours and fonts are CSS variables at the top of `assets/style.css`.
+The **Download PDF** button links to `static/cv/Muhammad-Bibi-CV.pdf`. After changing CV content, make a new PDF:
+
+```bash
+pip install -r requirements-pdf.txt   # WeasyPrint (one time)
+python3 build.py --pdf
+```
+
+then commit the new PDF. (Vercel cannot run WeasyPrint, so the PDF is made on your computer.)
+
+## Deploy
+
+Vercel installs `requirements.txt` by itself, then runs `python3 build.py` and publishes `public/`
+(see `vercel.json`). Push to `main` and the site updates.
 
 ## Contact form
 
-The form posts to FormSubmit (formsubmit.co), which emails messages to the address in
-`contact/index.html`. The first message triggers a one-time confirmation email.
+The form posts to FormSubmit (formsubmit.co), which emails messages to the address in `data/site.yaml`.

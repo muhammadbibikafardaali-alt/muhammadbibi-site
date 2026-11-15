@@ -1,0 +1,61 @@
+# Work experience, newest first.
+# Used on the Experience page AND on the CV, so you only update it here.
+#   responsibilities / outcomes -> Experience page
+#   cv_points                   -> CV (shorter)
+
+- title: Technical Support Engineer, Payments
+  company: Adyen
+  team: Unified Commerce
+  dates: "2024-05 → present"
+  kind: Full-time
+  current: true
+  responsibilities:
+    - Handle complex escalations on e-commerce and point-of-sale integrations.
+    - Debug checkout flows by reading API requests, webhooks and logs, and reproducing the calls.
+    - Support merchants on commerce platforms and payment plugins, such as Magento and Salesforce Commerce Cloud.
+    - Work with developers when the cause sits in the product.
+  outcomes:
+    - Own cases end to end, from first escalation to resolution.
+    - Trusted with complex, high-impact integration cases.
+    - Help new team members get up to speed.
+    - Step in across the team when extra cover is needed.
+  tags: [REST APIs, Webhooks, JSON, Postman, Salesforce Commerce Cloud, Magento, Point of sale, Log analysis, Jira]
+  cv_points:
+    - Complex escalations on e-commerce and point-of-sale integrations.
+    - Debug checkout flows through API requests, webhooks and logs.
+    - Payment plugins and integrations on Magento and Salesforce Commerce Cloud.
+    - Own cases end to end; help new team members get up to speed.
+
+- title: CloudSecOps Intern
+  company: iO
+  dates: "2023-09 → 2024-02"
+  kind: Internship
+  responsibilities:
+    - Strengthened cloud security and operational efficiency in an AWS environment.
+    - "Built advanced log management and security automation: centralised logging, alerting, and automated WAF responses."
+    - Defined the infrastructure in Terraform so it could be rebuilt and reviewed.
+  outcomes:
+    - Completed the graduation project, assessed Outstanding.
+  outcome_link: { label: Read the case study, href: /projects/ddos-aws/ }
+  tags: [AWS, AWS WAF, CloudWatch, CloudTrail, Lambda, Terraform]
+  cv_points:
+    - "Cloud security and operations on AWS: centralised log management and security automation, defined in Terraform."
+    - Graduation project on DDoS mitigation with AWS WAF, Shield, CloudWatch and Lambda, assessed Outstanding.
+
+- title: KYC Analyst
+  company: Adyen
+  dates: "2022-08 → 2023-10"
+  kind: Part-time
+  responsibilities:
+    - Reviewed and resolved daily screening alerts on merchants and sub-merchants (sanctions, PEP and adverse media), using internal systems and external databases.
+    - "Ran open-source intelligence (OSINT) research on every case: company registries, ownership and director records, merchant websites and domains, news and social media."
+    - Wrote risk assessments from those findings and escalated to second-line investigation following internal screening procedures.
+  outcomes:
+    - Helped automate parts of the screening process, reducing repetitive manual checks.
+    - Built a habit of verifying every finding against a second source before deciding.
+    - First role in payments, alongside my studies.
+  tags: [OSINT, Sanctions and PEP screening, Adverse media, Risk assessment, Process automation]
+  cv_points:
+    - Resolved daily sanctions, PEP and adverse-media screening alerts on merchants and sub-merchants.
+    - OSINT research across company registries, ownership records, websites, domains and media; wrote risk assessments and escalated to second line.
+    - Helped automate parts of the screening process.

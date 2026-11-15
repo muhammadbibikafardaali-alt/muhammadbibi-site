@@ -1,0 +1,88 @@
+{#- project.html: one template for every project page.
+    It shows only the sections that have content in data/projects.yaml. -#}
+{% extends "base.html" %}
+{% from "_macros.html" import status_label, tags %}
+{% block title %}{{ p.title }} · {{ site.name }}{% endblock %}
+{% block description %}{{ p.summary }}{% endblock %}
+
+{% block content %}
+  <section>
+    <p class="crumbs meta"><a href="/projects/">Projects</a> / {{ p.id }}</p>
+    <div class="case-top">
+      {{ status_label(p.status, filled=true) }}
+      <span class="meta">{{ p.year }}</span>
+    </div>
+    <h1 class="page-title">{{ p.title }}</h1>
+    <p class="lead muted" style="margin-top:16px">{{ p.summary }}</p>
+    {%- if p.links.live or p.links.github %}
+    <div class="actions">
+      {%- if p.links.live %}<a class="btn btn-primary" href="{{ p.links.live }}" rel="noopener">Open the live site ↗</a>{% endif %}
+      {%- if p.links.github %}<a class="btn btn-secondary" href="{{ p.links.github }}" rel="noopener">Code on GitHub ↗</a>{% endif %}
+    </div>
+    {%- endif %}
+  </section>
+
+  {%- if p.screenshots %}
+  <section class="shots">
+    {%- for s in p.screenshots %}
+    <figure class="shot">
+      <img src="{{ s.src }}" width="{{ s.w }}" height="{{ s.h }}" alt="{{ s.alt }}" {% if not loop.first %}loading="lazy"{% endif %}>
+      <figcaption class="meta">Fig. {{ loop.index }} · {{ s.caption }}</figcaption>
+    </figure>
+    {%- endfor %}
+  </section>
+  {%- endif %}
+
+  <div class="case">
+    <aside class="case-aside">
+      <div><span class="label">Status</span>{{ status_label(p.status) }}</div>
+      <div><span class="label">Who it's for</span>{{ p.who }}</div>
+      <div><span class="label">My role</span>{{ p.role }}</div>
+      <div><span class="label">Tech stack</span>{{ tags(p.stack) }}</div>
+      {%- if p.links.private %}<div><span class="label">Code</span>{{ p.links.private }}</div>{% endif %}
+    </aside>
+
+    <div class="case-main">
+      <section class="case-block block">
+        <p class="label">01 · Problem</p>
+        <p class="body" style="margin-top:12px">{{ p.problem }}</p>
+      </section>
+
+      <section class="case-block block">
+        <p class="label">02 · What I built</p>
+        <ul class="ticks body" style="margin-top:12px">{% for b in p.built %}<li>{{ b }}</li>{% endfor %}</ul>
+        {%- if p.stages %}
+        <div class="stages" aria-label="Stages" style="margin-top:20px">
+          {%- for st in p.stages %}<span class="stage{% if loop.index == p.stage_now %} active{% endif %}">{{ st }}</span>{% endfor %}
+        </div>
+        {%- endif %}
+      </section>
+
+      <section class="case-block block">
+        <p class="label">03 · How it works</p>
+        <p class="body" style="margin-top:12px">{{ p.how }}</p>
+      </section>
+
+      {%- if p.learned %}
+      <section class="case-block block">
+        <p class="label">04 · What I learned</p>
+        <ol class="lessons body" style="margin-top:12px">
+          {%- for l in p.learned %}<li><span class="meta">L{{ loop.index }}</span><p>{{ l }}</p></li>{% endfor %}
+        </ol>
+      </section>
+      {%- endif %}
+
+      {%- if p.next %}
+      <section class="case-block block">
+        <p class="label">Next</p>
+        <p class="body" style="margin-top:12px">{{ p.next }}</p>
+      </section>
+      {%- endif %}
+
+      <nav class="pager" aria-label="Projects">
+        <a class="text-link" href="/projects/">← All projects</a>
+        {%- if next_p %}<a class="text-link" href="/projects/{{ next_p.slug }}/">Next: {{ next_p.title }} →</a>{% endif %}
+      </nav>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,97 @@
+{#- cv.html: the CV page. The same HTML is turned into the PDF by `python3 build.py --pdf`.
+    Content comes from data/experience.yaml, data/projects.yaml and data/skills.yaml. -#}
+{% extends "base.html" %}
+{% block title %}CV · {{ site.name }}{% endblock %}
+{% block description %}CV of {{ site.name }}, {{ site.role }} at Adyen. One page, ready to print or download as PDF.{% endblock %}
+
+{% block content %}
+  <div class="cv-tools">
+    <p class="meta">One page, A4. Print it, or download the PDF.</p>
+    <a class="btn btn-primary" href="{{ site.cv_pdf }}" download>Download PDF</a>
+  </div>
+
+  <article class="cv">
+    <header class="cv-head">
+      <figure class="cv-photo"><img src="/img/cv-photo.webp" width="320" height="320" alt="{{ site.name }}"></figure>
+      <div>
+        <h1>{{ site.name }}</h1>
+        <p class="role">{{ site.role }}</p>
+        <ul class="cv-contact">
+          <li><span>Email</span><a href="mailto:{{ site.email }}">{{ site.email }}</a></li>
+          <li><span>LinkedIn</span><a href="{{ site.linkedin }}">{{ site.linkedin_label }}</a></li>
+          <li><span>GitHub</span><a href="{{ site.github }}">{{ site.github_label }}</a></li>
+          <li><span>Portfolio</span><a href="{{ site.url }}">{{ site.url | replace("https://", "") }}</a></li>
+          <li><span>Based in</span>{{ site.location }}</li>
+        </ul>
+      </div>
+    </header>
+
+    <div class="cv-cols">
+      {#- The side column comes first in the HTML so it can float next to the main column in the PDF. #}
+      <div class="cv-side">
+        <section>
+          <h2>Skills</h2>
+          {%- for g in skills.cv %}
+          <p class="cv-group">{{ g.name }}</p>
+          <ul class="chips">{% for s in g["items"] %}<li>{{ s }}</li>{% endfor %}</ul>
+          {%- endfor %}
+        </section>
+        <section>
+          <h2>Education</h2>
+          {%- for e in skills.education %}
+          <div class="cv-item">
+            <h3>{{ e.title }}</h3>
+            <p>{{ e.detail }}</p>
+            <p class="meta">{{ e.meta }}</p>
+          </div>
+          {%- endfor %}
+        </section>
+        <section>
+          <h2>Certifications</h2>
+          <ul class="cv-list">{% for c in skills.certifications %}<li>{{ c }}</li>{% endfor %}</ul>
+        </section>
+        <section>
+          <h2>Languages</h2>
+          <ul class="langs">
+            {%- for l in skills.languages %}
+            <li><span>{{ l.name }}</span><span class="level" aria-label="{{ l.level }}">{% for i in range(5) %}<i{% if i >= l.dots %} class="off"{% endif %}></i>{% endfor %}</span><em>{{ l.level }}</em></li>
+            {%- endfor %}
+          </ul>
+        </section>
+      </div>
+      <div class="cv-main">
+        <section>
+          <h2>Profile</h2>
+          <p class="cv-profile">Technical Support Engineer in payments who traces failing checkouts through API requests, webhooks and logs until the cause is found, then explains it clearly. Experienced with payment plugins and commerce platforms, with a background in AWS cloud infrastructure, security and OSINT research. Codes in Python and builds his own web apps, with AI as coding partner for other languages.</p>
+        </section>
+
+        <section>
+          <h2>Experience</h2>
+          <div class="cv-log">
+            {%- for job in experience %}
+            <div class="cv-item{% if job.current %} is-current{% endif %}">
+              <h3>{{ job.title }}{% if job.kind == "Part-time" %}, part-time{% endif %} <span class="at">· {{ job.company }}</span></h3>
+              <p class="meta">{{ job.dates }}{% if job.team %} · {{ job.team }}{% endif %}</p>
+              <ul class="ticks">{% for pt in job.cv_points %}<li>{{ pt }}</li>{% endfor %}</ul>
+            </div>
+            {%- endfor %}
+          </div>
+        </section>
+
+        {#- Projects are hidden on the CV for now. To show them again, set cv_show_projects: true in data/site.yaml. #}
+        {%- if site.cv_show_projects %}
+        <section>
+          <h2>Projects</h2>
+          {%- for p in projects if p.cv %}
+          <div class="cv-item">
+            <h3>{{ p.title }}{% if p.status == "progress" %} <span class="at">· in progress</span>{% endif %}</h3>
+            <p>{{ p.cv }}{% if p.links.live %} <a class="cv-link" href="{{ p.links.live }}">{{ p.links.live | replace("https://", "") }}</a>{% endif %}</p>
+          </div>
+          {%- endfor %}
+        </section>
+        {%- endif %}
+      </div>
+
+    </div>
+  </article>
+{% endblock %}
