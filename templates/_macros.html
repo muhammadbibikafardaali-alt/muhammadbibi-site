@@ -16,7 +16,7 @@
 
 {# One project as a timeline entry (used on Home and Projects). #}
 {% macro project_entry(p, heading="h2", full=false) -%}
-<li class="entry is-{{ p.status }}" id="{{ p.id | lower }}">
+<li class="entry is-{{ p.status }}" id="{{ p.id | lower }}" data-status="{{ p.status }}">
   <div class="entry-meta">
     <span class="meta">{{ p.id }} · {{ p.year }}</span>
     {{ status_label(p.status) }}

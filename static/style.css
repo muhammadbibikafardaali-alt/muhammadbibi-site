@@ -28,8 +28,10 @@
   color-scheme: light dark;
 }
 
+/* Dark colours: used when the device is in dark mode (unless the visitor chose light),
+   or when the visitor picked dark with the theme button (data-theme="dark" on <html>). */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
     --bg: #0F1513;
     --surface: #171F1C;
     --ink: #E7EDEA;
@@ -41,6 +43,19 @@
     --progress-tint: #3A2A12;
   }
 }
+:root[data-theme="dark"] {
+    --bg: #0F1513;
+    --surface: #171F1C;
+    --ink: #E7EDEA;
+    --muted: #9DAAA5;
+    --rule: #2D3834;
+    --delivered: #62CDB1;
+    --delivered-tint: #12332B;
+    --progress: #EBA650;
+    --progress-tint: #3A2A12;
+  color-scheme: dark;
+}
+:root[data-theme="light"] { color-scheme: light; }
 
 /* ---------- Base ---------- */
 *, *::before, *::after { box-sizing: border-box; }
@@ -299,7 +314,7 @@ th { font: 500 12px/1.5 var(--mono); letter-spacing: 0.08em; text-transform: upp
   .cv-item ul { margin-top: 3px; }
   .ticks li + li { margin-top: 2px; }
   .cv-main > section:first-child p { font-size: 9.5pt !important; }
-  .site-header, .site-footer, .cv-tools, .skip { display: none !important; }
+  .site-header, .site-footer, .cv-tools, .skip, .theme-toggle { display: none !important; }
   main { padding: 0; }
   .wrap { padding: 0; max-width: none; }
   .cv { border: 0; padding: 0 0 0 16px; max-width: none; }
@@ -324,6 +339,16 @@ th { font: 500 12px/1.5 var(--mono); letter-spacing: 0.08em; text-transform: upp
   .cv-group { margin: 8px 0 4px; }
   a { text-decoration: none; }
 }
+
+/* ---------- Theme button and project filter (only shown when JavaScript runs) ---------- */
+.theme-toggle { font: 500 13px/1 var(--mono); color: var(--muted); background: none; border: 1px solid var(--rule); border-radius: 2px; padding: 7px 10px; cursor: pointer; margin-inline-start: 16px; align-self: center; }
+.theme-toggle:hover { color: var(--ink); border-color: var(--ink); }
+.filter { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; }
+.filter[hidden], .theme-toggle[hidden] { display: none; }
+.filter button { font: 500 12px/1.5 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); background: none; border: 1px solid var(--rule); border-radius: 2px; padding: 6px 12px; cursor: pointer; }
+.filter button:hover { color: var(--ink); border-color: var(--ink); }
+.filter button[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.entry[hidden] { display: none; }
 
 /* ---------- Project screenshots ---------- */
 .shots { display: grid; gap: 24px; grid-template-columns: repeat(auto-fit, minmax(min(420px, 100%), 1fr)); margin-top: 48px; }

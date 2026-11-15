@@ -2,7 +2,7 @@
 
 Personal portfolio and CV of Muhammad Bibi: https://muhammadbibi.vercel.app
 
-A static site built with **Python + Jinja2**. No JavaScript.
+A static site built with **Python + Jinja2**. The only JavaScript is `static/site.js` (theme button and project filter); the site works without it.
 All the text lives in `data/*.yaml`, the layout in `templates/`, and `build.py` puts them together.
 
 ## Run it on your computer

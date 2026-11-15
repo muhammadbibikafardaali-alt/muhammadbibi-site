@@ -11,6 +11,9 @@
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="preload" href="/fonts/ibm-plex-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="/style.css">
+  {#- Applies a saved light/dark choice before the page paints, so it does not flash. -#}
+  <script>try{var t=localStorage.getItem("theme");if(t==="dark"||t==="light")document.documentElement.dataset.theme=t}catch(e){}</script>
+  <script src="/site.js" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -23,6 +26,7 @@
       <a href="{{ item.href }}"{% if item.page == page %} aria-current="page"{% endif %}>{{ item.label }}</a>
       {%- endfor %}
       <a class="push" href="/cv/"{% if page == 'cv' %} aria-current="page"{% endif %}>CV</a>
+      <button class="theme-toggle" type="button" hidden>Theme</button>
     </nav>
   </div>
 </header>

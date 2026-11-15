@@ -42,7 +42,7 @@
     but the home language needs daily practice. Most language apps are built for a child alone,
     with accounts, scores and screens, not for a parent and child doing everyday things together.
   who: Arabic-speaking families in the Netherlands with young children, around six years old, who cannot read yet.
-  role: Solo project. Idea, learning design, Arabic and Dutch content, and the build.
+  role: "Solo project: idea, learning design, Arabic and Dutch content, and product decisions. My own coding language is Python; for React and TypeScript, AI is my coding partner."
   built:
     - "Home screen with picture cards for each scene: kitchen, bathroom, bedroom, living room, farm and town."
     - "Kitchen scene with 12 things: tap one and a card shows the picture, the Dutch word with de/het and the Arabic word with harakat, and speaks both."
@@ -57,7 +57,10 @@
   screenshots:
     - { src: /img/projects/norah-kitchen.webp, w: 1024, h: 700, alt: "The kitchen scene: a fridge, sink, pot, fruit on a shelf, a table and a cat, drawn in soft colours.", caption: "The kitchen scene. Every object can be tapped." }
     - { src: /img/projects/norah-word-card.webp, w: 1024, h: 700, alt: "A word card showing an apple, “de appel” in Dutch and “تُفّاحة” in Arabic with a transliteration.", caption: "A word card: Dutch first, then Arabic, both spoken aloud." }
-  learned: []
+  learned:
+    - Every project has its own users and needs. Children are not students: for kids the path should be strict and simple, with their progress drawn on screen and made fun.
+    - Graphics and UX are part of the content. A child who cannot read needs pictures, sound and big, forgiving tap targets.
+    - Working through pull requests and version control, with automated checks (CI/CD), so I review every change before it goes live.
   links:
     private: The code is in a private repository.
 
@@ -73,7 +76,7 @@
     Testing yourself is the fastest way to make knowledge stick (active recall). Students starting in IT
     had no free, structured way to check what they really know, and little of it was in Arabic.
   who: Arabic-speaking IT students and junior professionals.
-  role: Solo project. Idea, question content and the build.
+  role: "Solo project: idea, question content and product decisions. My own coding language is Python; for React and TypeScript, AI is my coding partner."
   built:
     - 15 tracks, from Linux, networking and cybersecurity to cloud, DevOps, Python and AI prompting, with about 730 questions.
     - Up to five levels per track, ten questions each. The next level unlocks at 70%.
@@ -87,7 +90,10 @@
   screenshots:
     - { src: /img/projects/quiz-home.webp, w: 1280, h: 800, alt: "The Insider home page in Arabic: 15 tracks, 5 levels, 730 questions, and track cards for AI prompting, Python and web development.", caption: "Home: pick a track. Each card shows your progress." }
     - { src: /img/projects/quiz-question.webp, w: 1280, h: 800, alt: "A Linux level 1 question in Arabic asking which command lists files, with four answer options.", caption: "A question in the Linux track, level 1." }
-  learned: []
+  learned:
+    - Every project has its own users and needs. Students who test themselves need clear levels, honest feedback and progress they can see.
+    - Working through pull requests and version control, with automated checks (CI/CD), so I review every change before it goes live.
+    - Security is a big part of my training. I test my own projects and try to break into them, which taught me more about testing than any course.
   links:
     live: https://the-insider-quiz.vercel.app
     github: https://github.com/muhammadbibikafardaali-alt/TheInsiderQuiz
@@ -104,7 +110,7 @@
     People starting in IT often do not know which field suits them, or where to start once they choose one.
     There are too many resources and no plan to follow.
   who: First-year students and career switchers, in Arabic.
-  role: Solo project. Idea, roadmap content and resources, and the build.
+  role: "Solo project: idea, roadmap content, resources and product decisions. My own coding language is Python; for React and TypeScript, AI is my coding partner."
   built:
     - "Six questions: the track (front end, back end, full stack, cybersecurity, data, mobile, DevOps or networking), level, hours per week, goal, main obstacle and device."
     - "A personal plan: phases with topics, a hands-on project and free resources. The total length scales with your hours and shows an estimated finish month."
@@ -117,7 +123,10 @@
   screenshots:
     - { src: /img/projects/roadmap-plan.webp, w: 1280, h: 800, alt: "A personal cybersecurity roadmap in Arabic: 39 weeks, about 9 months, 390 study hours, 5 phases, with share and print buttons.", caption: "A plan for cybersecurity, beginner, 10 hours a week." }
     - { src: /img/projects/roadmap-wizard.webp, w: 1280, h: 800, alt: "Step 1 of 7 in Arabic: choose your IT track, with eight track cards.", caption: "Step 1: choose a track." }
-  learned: []
+  learned:
+    - Every project has its own users and needs. Students need flexibility, so the roadmap lets each student shape their own path instead of following one fixed route.
+    - Working through pull requests and version control, with automated checks (CI/CD), so I review every change before it goes live.
+    - Security is a big part of my training. I test my own projects and try to break into them, which taught me more about testing than any course.
   links:
     live: https://it-roadmap-three.vercel.app
     github: https://github.com/muhammadbibikafardaali-alt/it-roadmap

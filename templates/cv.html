@@ -62,7 +62,7 @@
       <div class="cv-main">
         <section>
           <h2>Profile</h2>
-          <p class="cv-profile">Technical Support Engineer in payments who traces failing checkouts through API requests, webhooks and logs until the cause is found, then explains it clearly. Experienced with payment plugins and commerce platforms, with a background in AWS cloud infrastructure, security and OSINT research. Builds and ships his own web apps and Python tools.</p>
+          <p class="cv-profile">Technical Support Engineer in payments who traces failing checkouts through API requests, webhooks and logs until the cause is found, then explains it clearly. Experienced with payment plugins and commerce platforms, with a background in AWS cloud infrastructure, security and OSINT research. Codes in Python and builds his own web apps, with AI as coding partner for other languages.</p>
         </section>
 
         <section>
@@ -78,6 +78,8 @@
           </div>
         </section>
 
+        {#- Projects are hidden on the CV for now. To show them again, set cv_show_projects: true in data/site.yaml. #}
+        {%- if site.cv_show_projects %}
         <section>
           <h2>Projects</h2>
           {%- for p in projects if p.cv %}
@@ -87,6 +89,7 @@
           </div>
           {%- endfor %}
         </section>
+        {%- endif %}
       </div>
 
     </div>

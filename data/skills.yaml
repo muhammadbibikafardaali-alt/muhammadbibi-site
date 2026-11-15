@@ -19,7 +19,7 @@ groups:
         note: "Lab notes on SSH hardening, systemd and journalctl, nginx troubleshooting, permissions, processes and networking."
         link: { label: skills repository, href: "https://github.com/muhammadbibikafardaali-alt/skills" }
       - skill: Web apps
-        note: "Two web apps shipped and in use, one in progress, built with React, Next.js and TypeScript and deployed on Vercel."
+        note: "Two web apps shipped and in use, one in progress, deployed on Vercel. My own coding language is Python; for React, Next.js and TypeScript, AI is my coding partner while I own the idea, the design, the review and the testing."
         link: { label: projects, href: /projects/ }
       - skill: AWS and Terraform
         note: Graduation project on AWS WAF, Shield, CloudWatch, Lambda and Terraform, assessed Outstanding.
@@ -41,7 +41,9 @@ cv:
   - name: Cloud and security
     items: [AWS, Terraform, Linux, Web security, Burp Suite, OSINT]
   - name: Programming and tools
-    items: [Python, React, Next.js, TypeScript, Postman, Jira, Salesforce]
+    items: [Python, Postman, Jira, Salesforce]
+  - name: Web apps, built with AI as coding partner
+    items: [React, Next.js, TypeScript]
 
 languages:
   - { name: Arabic, level: Native, dots: 5 }
